@@ -1,0 +1,94 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "vcarda-rewards",
+  "version": "1.0.0",
+  "description": "Design a profitable loyalty rewards card from your menu, then open it in Vcarda to save it.",
+  "author": {
+    "name": "Vcarda",
+    "url": "https://www.vcarda.com"
+  },
+  "homepage": "https://www.vcarda.com",
+  "repository": "https://github.com/redakrarssi/vcarda-plugins",
+  "license": "MIT",
+  "keywords": ["loyalty", "rewards", "restaurant", "cafe", "stamp-card", "points", "small-business"],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/design-loyalty-rewards/SKILL.md",
+      "interface": {
+        "displayName": "Vcarda Rewards",
+        "shortDescription": "Loyalty rewards from your menu",
+        "longDescription": "Vcarda Rewards turns your menu into a loyalty card that brings customers back without giving away your margin.\n\nShare your menu or price list. The assistant ranks the best reward candidates, asks for your profit margins, and builds a points or stamps card where every reward costs about the same share of revenue: a cheap drink needs few points, a main dish needs more. It recommends a quick first reward within 5 to 6 visits, can turn rewards 3 and up into combos, and explains the numbers behind each threshold.\n\nWhen the card is ready, one link opens it in the Vcarda program builder, already filled in. You review it and click Save. No account is needed to design a card; create a free Vcarda business account when you want to use it.\n\nAlready on Vcarda? Connect your account to see your existing programs and update their rewards from the chat. The assistant always shows the before and after and asks before changing anything. It cannot see your customers, payments or account settings.",
+        "developerName": "Vcarda",
+        "category": "Business",
+        "capabilities": [
+          "Builds a loyalty card from a menu, with thresholds based on item margins",
+          "Opens the finished card in the Vcarda program builder, pre-filled",
+          "Lists and updates the rewards of a connected Vcarda account, after confirmation"
+        ],
+        "websiteURL": "https://www.vcarda.com",
+        "supportURL": "https://www.vcarda.com",
+        "privacyPolicyURL": "https://www.vcarda.com/privacy#ai-assistant",
+        "termsOfServiceURL": "https://www.vcarda.com/terms",
+        "defaultPrompt": [
+          "Build a loyalty rewards card from my menu",
+          "How many points should a free coffee cost on my card?",
+          "Update the rewards of my Vcarda program"
+        ],
+        "brandColor": "#2C97FF",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Design a points card from a pasted menu without signing in",
+              "prompt": "Here is my cafe menu in QAR: Espresso 12, Latte 18, Fresh Lemon Mint 20, Cheesecake 25, Club Sandwich 38, Beef Steak 85. Build me a 4-reward points card.",
+              "tools_triggered": "upload_menu, recommend_rewards, build_rewards",
+              "expected_behavior": "Saves the menu, shows ranked reward candidates, asks for margins, then shows a 4-reward points card with a quick first reward and a combo suggestion for rewards 3 and up."
+            },
+            {
+              "description": "Finish the card in Vcarda with a pre-filled link",
+              "prompt": "Make rewards 3 and up combos, then give me the link to open it in Vcarda.",
+              "tools_triggered": "build_rewards, open_in_vcarda",
+              "expected_behavior": "Rebuilds with combos and returns an https://www.vcarda.com/apply-card link that shows the card and offers log in or sign up. Nothing is saved."
+            },
+            {
+              "description": "Stamp card with a safe strategy",
+              "prompt": "I run a juice bar: Orange 10, Mango 14, Berry Blast 16, Acai Bowl 28 (USD). I want a stamp card that costs me as little as possible, 3 rewards.",
+              "tools_triggered": "upload_menu, recommend_rewards, build_rewards",
+              "expected_behavior": "Builds a 3-reward stamps card with the safe strategy and explains why cheaper items need fewer stamps."
+            },
+            {
+              "description": "List programs of the connected test account",
+              "prompt": "Show me my existing Vcarda loyalty programs.",
+              "tools_triggered": "list_programs",
+              "expected_behavior": "With the reviewer account connected: lists its programs, their rewards and the account currency. Without an account: asks to connect the Vcarda account."
+            },
+            {
+              "description": "Edit one reward with a preview before saving",
+              "prompt": "In my first program, rename the first reward to Free Cappuccino.",
+              "tools_triggered": "list_programs, edit_program_rewards",
+              "expected_behavior": "Shows a before and after preview and changes nothing until the user confirms; after confirmation, the reward is renamed."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated request",
+              "prompt": "What is the capital of Australia?"
+            },
+            {
+              "description": "Customer data is out of scope",
+              "prompt": "Give me the phone numbers of my loyalty customers."
+            },
+            {
+              "description": "Payments are out of scope",
+              "prompt": "Charge my customers 20 dollars for a premium loyalty card."
+            }
+          ]
+        },
+        "commerce": false
+      }
+    }
+  }
+}

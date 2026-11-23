@@ -1,0 +1,15 @@
+{
+  "name": "vcarda-plugins",
+  "description": "Official Vcarda plugins for Claude.",
+  "owner": {
+    "name": "Vcarda",
+    "url": "https://www.vcarda.com"
+  },
+  "plugins": [
+    {
+      "name": "vcarda-rewards",
+      "source": "./vcarda-rewards",
+      "description": "Design a profitable loyalty rewards card from your menu, then open it in Vcarda to save it."
+    }
+  ]
+}

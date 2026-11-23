@@ -1,0 +1,19 @@
+{
+  "name": "vcarda-rewards",
+  "displayName": "Vcarda Rewards",
+  "version": "1.0.0",
+  "description": "Design a profitable loyalty rewards card from your menu, then open it in Vcarda to save it. Includes the Vcarda Rewards connector and a guided design workflow.",
+  "author": {
+    "name": "Vcarda",
+    "url": "https://www.vcarda.com"
+  },
+  "homepage": "https://www.vcarda.com",
+  "repository": "https://github.com/redakrarssi/vcarda-plugins",
+  "license": "MIT",
+  "keywords": ["loyalty", "rewards", "restaurant", "cafe", "stamp-card", "points", "small-business", "vcarda"],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://www.vcarda.com",
+  "supportUrl": "https://www.vcarda.com",
+  "privacyPolicyUrl": "https://www.vcarda.com/privacy#ai-assistant",
+  "termsOfServiceUrl": "https://www.vcarda.com/terms"
+}
